@@ -5,6 +5,13 @@
 
 <html lang="en">
 
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+
+<base href="<%=basePath%>"></base>
 <body>
 	<c:url value="/resources/text.txt" var="url"/>
 	<spring:url value="/resources/text.txt" htmlEscape="true" var="springUrl" />
@@ -13,6 +20,7 @@
 	JSTL URL: ${url}
 	<br>
 	Message: ${message}
+	<br>
 </body>
 
 </html>

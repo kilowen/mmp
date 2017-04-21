@@ -17,7 +17,7 @@ public class InternetUtils {
 	 * @throws IOException
 	 */
 	public static Document getContentByUrl(String url) {
-		Boolean ifc = false;
+		//Boolean ifc = false;
 		Document doc = null;
 		for (int j = 1; j <= Constants.NET_CON_RETRYCOUNT; j++) {
 			try {
@@ -52,7 +52,8 @@ public class InternetUtils {
 
 		Document doc = getContentByUrl("http://image.haosou.com/z?ch=wallpaper&listtype=hot");
 		String res = doc.toString();
-		String json = res.substring(res.indexOf("window.initData")+17,res.indexOf(";window.__ch"));
+		String json = res.substring(res.indexOf("initData")+10,res.indexOf("}]}}")+4);
+		//String json = res.substring(res.indexOf("initData")+17,res.indexOf(";window.__ch"));
 		System.out.println(json);
 		JSONObject jsonObject = JSONObject.fromObject(json);
 		JSONObject jsonObject1 = JSONObject.fromObject(jsonObject.get("data").toString());

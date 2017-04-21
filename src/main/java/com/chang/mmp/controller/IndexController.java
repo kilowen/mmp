@@ -36,14 +36,14 @@ public class IndexController {
 
 	@RequestMapping("/")
 	public ModelAndView welcome() {
-		
+
 		Document doc = InternetUtils.getContentByUrl("http://image.haosou.com/z?ch=wallpaper&listtype=hot");
 		String res = doc.toString();
-		String json = res.substring(res.indexOf("window.initData") + 17, res.indexOf(";window.__ch"));
-		//System.out.println(json);
+		String json = res.substring(res.indexOf("initData")+10,res.indexOf("}]}}")+4);
+		// System.out.println(json);
 		JSONObject jsonObject = JSONObject.fromObject(json);
 		JSONObject jsonObject1 = JSONObject.fromObject(jsonObject.get("data").toString());
-		//System.out.println("count------" + jsonObject1.getString("count"));
+		// System.out.println("count------" + jsonObject1.getString("count"));
 		JSONArray imgList = jsonObject1.getJSONArray("list");
 		List<BgImage> biList = new ArrayList<BgImage>();
 		for (int i = 0; i < imgList.size(); i++) {
@@ -54,14 +54,14 @@ public class IndexController {
 			System.out.println(jo.getString("cover_imgurl"));
 			bi.setName(StringUtils.unicodeToString(jo.getString("group_title")));
 			bi.setDesc(StringUtils.unicodeToString(jo.getString("group_desc")));
-			if(i==0){
+			if (i == 0) {
 				bi.setActive("1");
-			}else{
+			} else {
 				bi.setActive("0");
 			}
 			biList.add(bi);
 		}
-		return new ModelAndView("index", "imgList", biList);
+		return new ModelAndView("view", "imgList", biList);
 	}
 
 }
